@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages">
+		<header/>
+		<body>
+			<trans-unit id="vsTypo3Gallery_gallery" xml:space="preserve">
+				<source>Image Gallery</source>
+			</trans-unit>
+			<trans-unit id="vsTypo3Gallery_gallery.wizard.title" xml:space="preserve">
+				<source>Image Gallery</source>
+			</trans-unit>
+			<trans-unit id="vsTypo3Gallery_gallery.wizard.description" xml:space="preserve">
+				<source>Image Gallery Content Element</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

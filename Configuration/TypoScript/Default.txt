@@ -1,0 +1,12 @@
+tt_content {
+   vsTypo3Gallery_gallery < lib.fluidContent
+   vsTypo3Gallery_gallery {
+      templateName = NewContentElement.html
+      dataProcessing {
+         1 = Vendor\YourExtensionKey\DataProcessing\NewContentElementProcessor
+         1 {
+            useHere = theConfigurationOfTheDataProcessor
+         }
+      }
+   }
+}

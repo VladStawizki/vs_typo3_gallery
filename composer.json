@@ -1,0 +1,16 @@
+{
+    "name": "VLST/vs_typo3_gallery",
+    "type": "typo3-cms-extension",
+    "description": "Fancy JS Gallery Content Element",
+    "homepage": "https://github.com/VladStawizki/vs_typo3_gallery",
+    "license": ["GPL-2.0+"],
+    "keywords": ["TYPO3 CMS"],
+    "support": {
+        "issues": "https://github.com/VladStawizki/vs_typo3_gallery/issues"
+    },
+    "version": "1.0.0",
+
+    "require": {
+      "composer/installers": "*"
+    }
+}

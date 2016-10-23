@@ -1,0 +1,13 @@
+mod.wizards.newContentElement.wizardItems.common {
+   elements {
+      vsTypo3Gallery_gallery {
+         iconIdentifier = content-image
+         title = LLL:EXT:vs_typo3_gallery/Resources/Private/Language/Tca.xlf:vsTypo3Gallery_gallery.wizard.title
+         description = LLL:EXT:vs_typo3_gallery/Resources/Private/Language/Tca.xlf:vsTypo3Gallery_gallery.wizard.description
+         tt_content_defValues {
+            CType = vsTypo3Gallery_gallery
+         }
+      }
+   }
+   show := addToList(vsTypo3Gallery_gallery)
+}
