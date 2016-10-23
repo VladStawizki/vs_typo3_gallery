@@ -1,0 +1,1 @@
+# vs_typo3_gallery
