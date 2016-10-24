@@ -1,0 +1,19 @@
+lib.fluidContent {
+   templateRootPaths {
+      5000 = EXT:vs_typo3_gallery/Resources/Private/Templates/
+   }
+}
+
+tt_content {
+   vsTypo3Gallery_gallery < lib.fluidContent
+   vsTypo3Gallery_gallery {
+      templateName = Gallery.html
+      dataProcessing {
+            10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+	        10 {
+				references.fieldName = assets
+			}
+            20 = VLST\VsTypo3Gallery\DataProcessing\GalleryProcessor
+      }
+   }
+}
