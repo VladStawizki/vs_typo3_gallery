@@ -2,8 +2,12 @@
 
 namespace VLST\VsTypo3Gallery\DataProcessing;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
+use TYPO3\CMS\Extbase\Service\EnvironmentService;
+use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Core\Page\PageRenderer;
 
 /**
  * Class for data processing for the content element "My new content element".
@@ -11,6 +15,21 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 class GalleryProcessor implements DataProcessorInterface
 {
     /**
+     * @var \TYPO3\CMS\Extbase\Service\ImageService
+     */
+    protected $imageService;
+
+    protected $processingInstructionsForMainImage = [
+        'height' => 800,
+    ];
+
+    protected $processingInstructionsForLazyImage = [
+        'height' => 25,
+    ];
+
+    protected $jsonData = [];
+
+   /**
     * Process data for the content element "My new content element".
     *
     * @param ContentObjectRenderer $cObj The data of the content element or page
@@ -26,9 +45,33 @@ class GalleryProcessor implements DataProcessorInterface
       array $processorConfiguration,
       array $processedData
    ) {
-       var_dump($processedData);
-       $processedData['images'] = 'This variable will be passed to Fluid';
+       $this->imageService = GeneralUtility::makeInstance(ImageService::class);
+       $this->imageService->injectEnvironmentService(GeneralUtility::makeInstance(EnvironmentService::class));
+
+       foreach ($processedData['files'] as $file) {
+           $processedMainImage = $this->imageService->applyProcessingInstructions($file, $this->processingInstructionsForMainImage);
+           $this->jsonData['images'][] = $this->imageService->getImageUri($processedMainImage);
+
+           $processedLazyImage = $this->imageService->applyProcessingInstructions($file, $this->processingInstructionsForLazyImage);
+           $this->jsonData['thumbnails'][] = $this->imageService->getImageUri($processedLazyImage);
+       }
+       $this->getPageRenderer()->addCssFile('EXT:vs_typo3_gallery/Resources/Public/Css/main.css');
+       $this->getPageRenderer()->addJsFooterFile('EXT:vs_typo3_gallery/Resources/Public/JavaScript/main.js');
+       $processedData['galleryData'] = '<script> var galleryData = '. json_encode($this->jsonData) . '</script>';
 
        return $processedData;
    }
+
+   /**
+     * Wrapper for access to the current page renderer object
+     *
+     * @return \TYPO3\CMS\Core\Page\PageRenderer
+     */
+    protected function getPageRenderer()
+    {
+        if ($this->pageRenderer === null) {
+            $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        }
+        return $this->pageRenderer;
+    }
 }
